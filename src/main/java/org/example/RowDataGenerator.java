@@ -19,7 +19,7 @@ long iterationsSize;
 FieldInfo[] fieldInfos;
 RowInfo rowInfo;
 RowData m_rowData;
-Random randomInteger = new Random();
+Random m_random = new Random();
 List<RowData> m_rowDataList = new ArrayList<>();
 
 public RowDataGenerator(FieldInfo[] fieldInfos, long iterationsSize)
@@ -48,10 +48,16 @@ private RowData generateRandomKeyData(RowData rowData)
 {
     for (int i = 0; i < rowData.getFieldCount();i++){
         if(rowData.getFieldData(i).getFieldType() == FieldType.INTEGER){
-            rowData.getFieldData(i).setValue(randomInteger.nextInt((int) (iterationsSize * 0.01)));
+            rowData.getFieldData(i).setValue(m_random.nextInt((int) (iterationsSize * 0.01)));
         }
         else if(rowData.getFieldData(i).getFieldType() == FieldType.LONG){
-            rowData.getFieldData(i).setValue(randomInteger.nextLong());
+            rowData.getFieldData(i).setValue(m_random.nextLong());
+        }
+        else if(rowData.getFieldData(i).getFieldType() == FieldType.FLOAT){
+            rowData.getFieldData(i).setValue(m_random.nextFloat());
+        }
+        else if(rowData.getFieldData(i).getFieldType() == FieldType.DOUBLE){
+            rowData.getFieldData(i).setValue(m_random.nextDouble());
         }
     }
     return rowData.clone();
